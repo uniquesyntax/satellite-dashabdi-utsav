@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>SMVS Satellite Dashabdi Mahotsav 2026 | નિમંત્રણ પત્રિકા</title>
+  <meta name="description" content="SMVS Swaminarayan Mandir – Satellite Centre Dashabdi Mahotsav 2026 Invitation">
+
+  <!-- Favicon / SVG Icon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='46' fill='%23700c1b' stroke='%23d4af37' stroke-width='4'/><circle cx='50' cy='50' r='18' fill='%23d4af37'/><circle cx='50' cy='50' r='9' fill='%23c23c14'/></svg>">
+
+  <!-- Google Fonts for Gujarati and Royal Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Marcellus&family=Noto+Serif+Gujarati:wght@400;500;600;700;800&family=Rozha+One&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="locked">
+
+  <!-- ==============================================
+       ENVELOPE ENTRANCE & TAP TO OPEN (INITIAL VIEW)
+       ============================================== -->
+  <div id="entrance" class="entrance" role="dialog" aria-modal="true" aria-label="Envelope Invitation">
+    <div class="entrance-backdrop"></div>
+    
+    <div class="envelope-wrapper">
+      
+      <!-- Responsive Envelope Picture (Mobile vs PC/Tablet) -->
+      <picture id="envelopePicture" class="envelope-picture">
+        <source id="envelopeSourceMobile" media="(max-width: 767px)" srcset="assets/envelope-first.webep, assets/envelope-first.webp, envelope-first.webep, envelope-first.webp">
+        <source id="envelopeSourceDesktop" media="(min-width: 768px)" srcset="assets/Envelop_Horizontal.jpg, Envelop_Horizontal.jpg">
+        <img id="envelopeImg" class="envelope-img" src="assets/Envelop_Horizontal.jpg" alt="Dashabdi Mahotsav Envelope" fetchpriority="high">
+      </picture>
+
+      <!-- Tap on Envelope Seal Button & Prompt -->
+      <button id="envelopeOpenBtn" class="envelope-tap-area" aria-label="Tap on envelope seal to open">
+        <div class="wax-seal-pulse" aria-hidden="true">
+          <span class="seal-glow-ring"></span>
+          <span class="seal-core">૧૦</span>
+        </div>
+        
+        <div class="tap-hint-pill">
+          <span class="hint-sparkle">✨</span>
+          <span class="hint-text">Tap on Envelope Seal to Open</span>
+          <span class="hint-sparkle">✨</span>
+        </div>
+      </button>
+
+      <!-- Video Element: Envelop Opening Final.mp4 -->
+      <video id="openingVideo" class="opening-video" playsinline preload="auto" hidden>
+        <source src="assets/Envelop Opening Final.mp4" type="video/mp4">
+        <source src="Envelop Opening Final.mp4" type="video/mp4">
+        <source src="assets/opening.mp4" type="video/mp4">
+      </video>
+
+      <!-- Skip Opening Button -->
+      <button id="skipOpeningBtn" class="skip-opening-btn" hidden>Skip ➔</button>
+
+    </div>
+  </div>
+
+  <!-- Background Kirtan Audio (Dashabdi Kirtan.mp3) -->
+  <audio id="kirtanAudio" loop preload="auto">
+    <source src="assets/Dashabdi Kirtan.mp3" type="audio/mpeg">
+    <source src="Dashabdi Kirtan.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Background Music & Ambient Controls -->
+  <aside class="floating-controls" aria-label="Audio and Effects Controls">
+    <button id="musicToggleBtn" class="control-btn" title="કીર્તન ચાલુ/બંધ (Play/Pause Kirtan)" aria-label="Toggle Kirtan Music">
+      <span class="btn-icon" id="musicBtnIcon">🎵</span>
+      <span class="btn-label" id="musicBtnLabel">કીર્તન</span>
+    </button>
+    <button id="autoScrollToggleBtn" class="control-btn active" title="ઓટો સ્ક્રોલ ચાલુ/બંધ (Toggle Auto-Scroll)" aria-label="Toggle Auto-Scroll">
+      <span class="btn-icon" id="scrollBtnIcon">📜</span>
+      <span class="btn-label" id="scrollBtnLabel">ઓટો સ્ક્રોલ</span>
+    </button>
+    <button id="bellSoundBtn" class="control-btn" title="મંદિર ઘંટડી નાદ (Temple Bell)" aria-label="Play Temple Bell">
+      <span class="btn-icon">🔔</span>
+      <span class="btn-label">ઘંટનાદ</span>
+    </button>
+    <button id="petalToggleBtn" class="control-btn" title="પુષ્પવૃષ્ટિ ચાલુ/બંધ (Toggle Flower Petals)" aria-label="Toggle Flower Shower">
+      <span class="btn-icon">🌸</span>
+      <span class="btn-label">પુષ્પવૃષ્ટિ</span>
+    </button>
+  </aside>
+
+  <!-- Canvas for Flower Petals & Divine Sparkles -->
+  <canvas id="petalCanvas" class="petal-canvas" aria-hidden="true"></canvas>
+
+  <!-- Main Website Wrapper -->
+  <div id="mainWrapper" class="main-wrapper" inert>
+
+    <!-- ==============================================
+         2. HERO SECTION (FULL SCREEN)
+         ============================================== -->
+    <header id="hero" class="hero-section full-screen">
+      <!-- Temple Cinematic Ambient Background with Slow Bells -->
+      <div class="hero-cinematic-bg">
+        <div class="temple-shikhar-silhouette"></div>
+        <div class="divine-light-beams"></div>
+        <div class="golden-dust-overlay"></div>
+      </div>
+
+      <!-- Slow Swinging Hanging Temple Bells -->
+      <div class="hanging-bells-container" aria-hidden="true">
+        <div class="hanging-bell bell-left" id="bell1" title="Click to ring bell">
+          <div class="bell-chain"></div>
+          <div class="bell-brass">
+            <span class="bell-clapper"></span>
+          </div>
+        </div>
+        <div class="hanging-bell bell-center" id="bell2" title="Click to ring bell">
+          <div class="bell-chain"></div>
+          <div class="bell-brass big-bell">
+            <span class="bell-clapper"></span>
+          </div>
+        </div>
+        <div class="hanging-bell bell-right" id="bell3" title="Click to ring bell">
+          <div class="bell-chain"></div>
+          <div class="bell-brass">
+            <span class="bell-clapper"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hero Royal Frame & Content -->
+      <div class="hero-card-container">
+        <div class="royal-border-frame">
+          <div class="corner-ornament top-left"></div>
+          <div class="corner-ornament top-right"></div>
+          <div class="corner-ornament bottom-left"></div>
+          <div class="corner-ornament bottom-right"></div>
+
+          <div class="hero-card-inner">
+            <!-- Center Sacred Tilak -->
+            <div class="sacred-emblem hero-emblem" aria-hidden="true">
+              <span class="tilak-u"></span>
+              <span class="chandlo-dot"></span>
+            </div>
+
+            <!-- Content Exactly as specified -->
+            <h1 class="hero-main-title golden-text">દશાબ્દી મહોત્સવ – ૨૦૨૬</h1>
+            
+            <p class="hero-tagline golden-border-pill">૧૦ વર્ષ ભક્તિ • સેવા • સત્સંગ</p>
+
+            <h2 class="hero-temple-name">SMVS સ્વામિનારાયણ મંદિર – સેટેલાઇટ સેન્ટર</h2>
+
+            <p class="hero-presence">વ્હાલા ગુરુદેવ અને ગુરુજીના દિવ્ય સાનિધ્યમાં</p>
+
+            <div class="hero-date-badge">
+              <span class="date-text">🗓️ ૨૬ ઓક્ટોબર ૨૦૨૬ • સોમવાર • શરદ પૂનમ</span>
+            </div>
+
+            <!-- Button: ✨ Open Invitation -->
+            <div class="hero-action-wrap">
+              <button id="openInvitationBtn" class="royal-primary-btn" aria-label="Open Invitation">
+                <span class="btn-shimmer"></span>
+                <span class="btn-text">✨ Open Invitation</span>
+              </button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-scroll-indicator" aria-hidden="true">
+        <span class="scroll-arrow">⌄</span>
+      </div>
+    </header>
+
+    <!-- ==============================================
+         3. STORY REVEAL
+         ============================================== -->
+    <section id="story" class="section-container story-section">
+      <div class="ornate-separator" aria-hidden="true">
+        <span class="sep-line"></span>
+        <span class="sep-motif">❖ ૐ ❖</span>
+        <span class="sep-line"></span>
+      </div>
+
+      <div class="royal-parchment-card story-card">
+        <div class="parchment-corner tl"></div>
+        <div class="parchment-corner tr"></div>
+        <div class="parchment-corner bl"></div>
+        <div class="parchment-corner br"></div>
+
+        <div class="story-content">
+          <h3 class="story-quote-lead golden-text">સમય માત્ર વર્ષો નથી ગણતો…</h3>
+          <h4 class="story-quote-highlight">સમય સંકલ્પોને ઇતિહાસ બનાવે છે.</h4>
+
+          <div class="golden-divider-mini" aria-hidden="true">
+            <span></span>
+            <span class="diya-icon">🪔</span>
+            <span></span>
+          </div>
+
+          <p class="story-paragraph">
+            દસ વર્ષ પહેલાં એક નાનકડા સંકલ્પથી શરૂ થયેલું સેટેલાઇટ સેન્ટર આજે હજારો હરિભક્તોના જીવનમાં ભક્તિ, સેવા અને સત્સંગનું પ્રેરણાસ્થાન બન્યું છે.
+          </p>
+
+          <p class="story-conclusion">
+            આ દશાબ્દી માત્ર વર્ષોની ઉજવણી નથી… આ છે ગુરુદેવ અને ગુરુજીના આશીર્વાદની અનુભૂતિ.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==============================================
+         4. THE JOURNEY
+         ============================================== -->
+    <section id="journey" class="section-container journey-section">
+      <div class="section-header">
+        <div class="royal-title-tag">The Journey</div>
+        <h2 class="section-title golden-text">૧૦ વર્ષની દિવ્ય યાત્રા</h2>
+        <div class="ornate-underline" aria-hidden="true"></div>
+      </div>
+
+      <div class="journey-pillars-grid">
+        
+        <!-- Pillar 1: ભક્તિ -->
+        <div class="pillar-card">
+          <div class="pillar-card-inner">
+            <div class="pillar-badge">
+              <span class="pillar-num">૧</span>
+              <span class="pillar-icon">🙏</span>
+            </div>
+            <h3 class="pillar-title golden-text">ભક્તિ</h3>
+            <p class="pillar-desc">અખંડ સત્સંગ અને શ્રીહરિનો રાજીપો</p>
+          </div>
+        </div>
+
+        <!-- Pillar 2: સેવા -->
+        <div class="pillar-card highlight-pillar">
+          <div class="pillar-card-inner">
+            <div class="pillar-badge">
+              <span class="pillar-num">૨</span>
+              <span class="pillar-icon">🤝</span>
+            </div>
+            <h3 class="pillar-title golden-text">સેવા</h3>
+            <p class="pillar-desc">સમર્પણથી સજેલી અનંત સેવાઓ</p>
+            <div class="pillar-sub-divider" aria-hidden="true">✦</div>
+            <p class="pillar-subtext">સંસ્કાર અને આધ્યાત્મિક જીવનની સફર</p>
+          </div>
+        </div>
+
+        <!-- Pillar 3: સંસ્કાર -->
+        <div class="pillar-card">
+          <div class="pillar-card-inner">
+            <div class="pillar-badge">
+              <span class="pillar-num">૩</span>
+              <span class="pillar-icon">🌱</span>
+            </div>
+            <h3 class="pillar-title golden-text">સંસ્કાર</h3>
+            <p class="pillar-desc">બાળકો, કિશોર કિશોરી તથા યુવક-યુવતી અને પરિવારનો વિકાસ</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==============================================
+         5. INVITATION
+         ============================================== -->
+    <section id="invitation" class="section-container invitation-section">
+      <div class="invitation-kankotri-wrapper">
+        <div class="kankotri-card">
+          
+          <!-- Ornate Golden Borders & Seal -->
+          <div class="kankotri-border-art"></div>
+          
+          <div class="kankotri-inner">
+            <div class="sacred-seal" aria-hidden="true">
+              <span class="seal-icon">૧૦</span>
+              <span class="seal-ring"></span>
+            </div>
+
+            <h2 class="invitation-main-heading golden-text">પ્રેમભર્યું આમંત્રણ</h2>
+
+            <div class="invitation-text-body">
+              <p class="invitation-message">
+                મહારાજ, બાપા, ગુરુદેવ અને ગુરુજીના આશીર્વાદથી યોજાનારા આ ભવ્ય દશાબ્દી મહોત્સવમાં આપ અને આપના સમગ્ર પરિવારને સહર્ષ પધારવા હાર્દિક નિમંત્રણ.
+              </p>
+            </div>
+
+            <div class="utsav-callout-box">
+              <span class="callout-ornament">❝</span>
+              <p class="utsav-callout-text golden-text">“આવ્યો સેટેલાઈટ મંદિરે ઉત્સવ…”</p>
+              <span class="callout-ornament">❞</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ==============================================
+         6. EVENT DETAILS
+         ============================================== -->
+    <section id="details" class="section-container details-section">
+      <div class="section-header">
+        <div class="royal-title-tag">Event Details</div>
+        <h2 class="section-title golden-text">મહોત્સવની વિગતો</h2>
+        <div class="ornate-underline" aria-hidden="true"></div>
+      </div>
+
+      <div class="details-grid">
+        
+        <!-- 1. તારીખ -->
+        <div class="detail-card">
+          <div class="detail-icon-wrap">
+            <span class="detail-icon">📅</span>
+          </div>
+          <div class="detail-info">
+            <h3 class="detail-label">તારીખ</h3>
+            <p class="detail-value">૨૬ ઓક્ટોબર ૨૦૨૬ (સોમવાર)</p>
+          </div>
+        </div>
+
+        <!-- 2. પ્રસંગ -->
+        <div class="detail-card">
+          <div class="detail-icon-wrap">
+            <span class="detail-icon">🌕</span>
+          </div>
+          <div class="detail-info">
+            <h3 class="detail-label">પ્રસંગ</h3>
+            <p class="detail-value">શરદ પૂનમ • દશાબ્દી મહોત્સવ</p>
+          </div>
+        </div>
+
+        <!-- 3. સ્થળ -->
+        <div class="detail-card">
+          <div class="detail-icon-wrap">
+            <span class="detail-icon">🛕</span>
+          </div>
+          <div class="detail-info">
+            <h3 class="detail-label">સ્થળ</h3>
+            <p class="detail-value">SMVS શ્રી સ્વામિનારાયણ મંદિર, સેટેલાઇટ , અમદાવાદ.</p>
+          </div>
+        </div>
+
+        <!-- 4. સમય -->
+        <div class="detail-card">
+          <div class="detail-icon-wrap">
+            <span class="detail-icon">⏰</span>
+          </div>
+          <div class="detail-info">
+            <h3 class="detail-label">સમય</h3>
+            <p class="detail-value">સાંજે ૪:૦૦ થી રાત્રે ૯:૦૦</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==============================================
+         7. WHAT AWAITS YOU
+         ============================================== -->
+    <section id="awaits" class="section-container awaits-section">
+      <div class="section-header">
+        <div class="royal-title-tag">What Awaits You</div>
+        <h2 class="section-title golden-text">મહોત્સવની વિશેષતા</h2>
+        <div class="ornate-underline" aria-hidden="true"></div>
+      </div>
+
+      <div class="awaits-list">
+        
+        <div class="await-item">
+          <div class="await-bullet">✨</div>
+          <div class="await-content">
+            <h3 class="await-title">વ્હાલા ગુરુજી નો દીવ્ય લાભ</h3>
+          </div>
+        </div>
+
+        <div class="await-item">
+          <div class="await-bullet">🙏</div>
+          <div class="await-content">
+            <h3 class="await-title">દિવ્ય રજત તુલા વિધિ</h3>
+          </div>
+        </div>
+
+        <div class="await-item">
+          <div class="await-bullet">✨</div>
+          <div class="await-content">
+            <h3 class="await-title">ભવ્ય અન્નકૂટ દર્શન</h3>
+          </div>
+        </div>
+
+        <div class="await-item">
+          <div class="await-bullet">🎭</div>
+          <div class="await-content">
+            <h3 class="await-title">મહાપ્રસાદ (જમણવાર)</h3>
+          </div>
+        </div>
+
+        <div class="await-item">
+          <div class="await-bullet">❤️</div>
+          <div class="await-content">
+            <h3 class="await-title">સહપરિવાર ભક્તિમય આનંદ</h3>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==============================================
+         8. COUNTDOWN SECTION (LIVE)
+         ============================================== -->
+    <section id="countdown" class="section-container countdown-section">
+      <div class="countdown-panel">
+        
+        <div class="section-header">
+          <div class="royal-title-tag">Countdown</div>
+          <h2 class="section-title golden-text">હવે રાહ માત્ર…</h2>
+        </div>
+
+        <!-- Live Countdown Cards -->
+        <div class="countdown-grid" id="countdownGrid" aria-live="polite">
+          
+          <div class="countdown-card">
+            <div class="card-inner-box">
+              <span class="countdown-num golden-text" id="cdDays">00</span>
+              <span class="countdown-label">Days</span>
+            </div>
+          </div>
+
+          <div class="countdown-card">
+            <div class="card-inner-box">
+              <span class="countdown-num golden-text" id="cdHours">00</span>
+              <span class="countdown-label">Hours</span>
+            </div>
+          </div>
+
+          <div class="countdown-card">
+            <div class="card-inner-box">
+              <span class="countdown-num golden-text" id="cdMinutes">00</span>
+              <span class="countdown-label">Minutes</span>
+            </div>
+          </div>
+
+          <div class="countdown-card">
+            <div class="card-inner-box">
+              <span class="countdown-num golden-text" id="cdSeconds">00</span>
+              <span class="countdown-label">Seconds</span>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="countdown-target-note">
+          <span>૨૬ ઓક્ટોબર ૨૦૨૬ • શરદ પૂનમ</span>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==============================================
+         9. BLESSINGS
+         ============================================== -->
+    <section id="blessings" class="section-container blessings-section">
+      <div class="blessings-card">
+        <div class="parchment-corner tl"></div>
+        <div class="parchment-corner tr"></div>
+        <div class="parchment-corner bl"></div>
+        <div class="parchment-corner br"></div>
+
+        <div class="sacred-kalash-icon" aria-hidden="true">
+          <svg viewBox="0 0 100 100" class="kalash-svg">
+            <ellipse cx="50" cy="70" rx="30" ry="24" fill="#a62b17" stroke="#d4af37" stroke-width="3"/>
+            <path d="M35 50 Q50 35 65 50" fill="none" stroke="#d4af37" stroke-width="3"/>
+            <circle cx="50" cy="38" r="14" fill="#6d0d19" stroke="#d4af37" stroke-width="2"/>
+            <polygon points="50,15 42,32 58,32" fill="#d4af37"/>
+            <path d="M28 42 Q50 20 72 42" stroke="#2e7d32" stroke-width="3" fill="none"/>
+          </svg>
+        </div>
+
+        <h2 class="blessings-heading golden-text">વ્હાલા ગુરુદેવ અને ગુરુજીના ચરણોમાં</h2>
+
+        <div class="blessing-quote-box">
+          <p class="blessing-quote">
+            “ભક્તિથી જીવન શોભે, સેવાથી સમાજ શોભે અને સત્સંગથી આત્મા શોભે.”
+          </p>
+        </div>
+
+        <p class="blessing-prayer">
+          આ દશાબ્દી મહોત્સવ સૌના જીવનમાં નવી ભક્તિ અને નવા સંસ્કારોનું પ્રેરણાસ્ત્રોત બને તેવી પ્રાર્થના.
+        </p>
+
+      </div>
+    </section>
+
+    <!-- ==============================================
+         10. GRAND ENDING
+         ============================================== -->
+    <footer id="ending" class="grand-ending-section">
+      <div class="ending-arch-frame">
+        
+        <div class="ending-content">
+          <p class="ending-callout">આવજો જરૂર…</p>
+          <h2 class="ending-verse golden-text">આવ્યો સેટેલાઈટ મંદિરે ઉત્સવ…</h2>
+          <h1 class="ending-grand-title">સેટેલાઈટ દશાબ્દી ઉત્સવ!!</h1>
+
+          <div class="ending-date-pill">
+            <span class="royal-date-tag">26 • 10 • 2026</span>
+          </div>
+
+          <!-- Buttons from Section 10 -->
+          <div class="ending-actions-grid">
+            <a href="https://www.google.com/maps/search/?api=1&query=SMVS+Swaminarayan+Mandir+Satellite+Ahmedabad" 
+               target="_blank" 
+               rel="noopener noreferrer" 
+               class="royal-action-btn direction-btn">
+              <span class="btn-icon">📍</span>
+              <span class="btn-text">Get Directions</span>
+            </a>
+
+            <button id="shareBtn" class="royal-action-btn share-btn">
+              <span class="btn-icon">💌</span>
+              <span class="btn-text">Share Invitation</span>
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Traditional Bottom Ribbon / Footnote -->
+      <div class="bottom-sacred-footer">
+        <div class="footer-emblem" aria-hidden="true">
+          <span class="tilak-u sm"></span>
+          <span class="chandlo-dot sm"></span>
+        </div>
+        <p class="footer-center-tag">SMVS Swaminarayan Mandir – Satellite Centre • Dashabdi Mahotsav 2026</p>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- Share Modal Dialog -->
+  <dialog id="shareModal" class="royal-modal" aria-labelledby="shareTitle">
+    <div class="modal-card">
+      <button id="closeModalBtn" class="modal-close" aria-label="Close Share Dialog">✕</button>
+      <h3 id="shareTitle" class="modal-title golden-text">નિમંત્રણ શેર કરો</h3>
+      <p class="modal-subtitle">SMVS Satellite Dashabdi Mahotsav 2026</p>
+      
+      <div class="share-options-list">
+        <a id="whatsappShareBtn" href="#" target="_blank" rel="noopener noreferrer" class="share-link-btn whatsapp">
+          <span class="share-icon">💬</span>
+          <span>WhatsApp પર મોકલો</span>
+        </a>
+
+        <button id="copyLinkBtn" class="share-link-btn copy">
+          <span class="share-icon">🔗</span>
+          <span id="copyBtnText">લિંક કોપી કરો (Copy Link)</span>
+        </button>
+      </div>
+
+      <div id="copyToast" class="copy-toast" role="status" aria-live="polite">લિંક કોપી થઈ ગઈ છે!</div>
+    </div>
+  </dialog>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
