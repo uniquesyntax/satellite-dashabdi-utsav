@@ -52,7 +52,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const entrance = document.getElementById('entrance');
   const envelopeOpenBtn = document.getElementById('envelopeOpenBtn');
   const openingVideo = document.getElementById('openingVideo');
-  const skipOpeningBtn = document.getElementById('skipOpeningBtn');
   const mainWrapper = document.getElementById('mainWrapper');
   const kirtanAudio = document.getElementById('kirtanAudio');
 
@@ -63,13 +62,20 @@ document.addEventListener('DOMContentLoaded', () => {
     if (isOpened) return;
     isOpened = true;
 
-    // 1. Play Dashabdi Kirtan MP3
+    // 1. Hide envelope background image immediately when video starts loading
+    entrance.classList.add('video-playing');
+    const envelopePicture = document.getElementById('envelopePicture');
+    if (envelopePicture) {
+      envelopePicture.style.display = 'none';
+    }
+
+    // 2. Play Dashabdi Kirtan MP3
     playKirtan();
 
-    // 2. Play Web Audio Bell chime for sacred atmosphere
-    playTempleBell(659.25, 4.0);
+    // 3. Play Web Audio Bell chime for sacred atmosphere
+    // Bell sound removed per user request
 
-    // 3. Play Envelop Opening Final.mp4
+    // 4. Play Envelop Opening Final.mp4
     if (openingVideo) {
       if (envelopeOpenBtn) {
         envelopeOpenBtn.style.pointerEvents = 'none';
@@ -77,9 +83,11 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       openingVideo.hidden = false;
-      if (skipOpeningBtn) {
-        skipOpeningBtn.hidden = false;
-      }
+
+      openingVideo.addEventListener('playing', () => {
+        entrance.classList.add('video-playing');
+        if (envelopePicture) envelopePicture.style.display = 'none';
+      }, { once: true });
 
       try {
         await openingVideo.play();
@@ -136,18 +144,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Also tapping on the entrance overlay triggers opening
   if (entrance) {
-    entrance.addEventListener('click', (e) => {
-      if (e.target === skipOpeningBtn) return;
+    entrance.addEventListener('click', () => {
       if (!isOpened) {
         startEnvelopeOpening();
       }
-    });
-  }
-
-  if (skipOpeningBtn) {
-    skipOpeningBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      finishOpening();
     });
   }
 
@@ -435,11 +435,11 @@ document.addEventListener('DOMContentLoaded', () => {
   resizeCanvas();
 
   const petalColors = [
-    '#f44336', // Rose Petal Red
-    '#e91e63', // Deep Pink
-    '#ff9800', // Marigold Saffron
-    '#ffc107', // Golden Yellow
-    '#ffd54f'  // Sparkle Gold
+    '#d50000', // Deep Rose Red
+    '#c2185b', // Rose Pink
+    '#e91e63', // Magenta Rose
+    '#f48fb1', // Light Rose
+    '#ffab91'  // Soft Peach Rose
   ];
 
   class Petal {
